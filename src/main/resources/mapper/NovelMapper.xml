@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzz.neko.dao.NovelMapper">
+  <resultMap id="BaseResultMap" type="com.wzz.neko.model.Novel">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="cover" jdbcType="VARCHAR" property="cover" />
+    <result column="chapter_url" jdbcType="VARCHAR" property="chapterUrl" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="latest_chapter_name" jdbcType="VARCHAR" property="latestChapterName" />
+    <result column="latest_chapter_url" jdbcType="VARCHAR" property="latestChapterUrl" />
+    <result column="latest_update_time" jdbcType="TIMESTAMP" property="latestUpdateTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+    <result column="click_count" jdbcType="BIGINT" property="clickCount" />
+  </resultMap>
+  <update id="updateClickCountById">
+    update novel set click_count = click_count + #{count} where id = #{id}
+  </update>
+  <select id="getCoverPath" resultType="java.lang.String">
+      select cover_path from novel_detail where book_id = #{novelId}
+    </select>
+
+  <select id="getStatus" resultType="java.lang.String">
+    select status from novel_detail where book_id = #{novelId}
+  </select>
+  <select id="getLatestUpdateTime" resultType="java.util.Date">
+    select latest_update_time from novel_detail where book_id = #{novelId}
+  </select>
+    <select id="getLatestIdByCategory" resultType="java.lang.Long">
+      SELECT id from novel where category = #{category} ORDER BY latest_update_time desc LIMIT 0, #{count};
+    </select>
+  <select id="getNovelByNameAndAuthor" resultMap="BaseResultMap">
+      SELECT * from novel where book_name = #{name}
+      and author = #{author}
+  </select>
+    <select id="listBySearchNovelVo" resultMap="BaseResultMap">
+      select * from novel
+      <where>
+        <if test="name != 'default'">
+          category = #{name}
+        </if>
+        <if test="status != 'default'">
+          and status = #{status}
+        </if>
+      </where>
+      <if test="sort == 'latest_update_time'">
+        order by latest_update_time desc
+      </if>
+      <if test="sort == 'click_count'">
+        order by click_count desc
+      </if>
+    </select>
+  <select id="listByBookNameOrAuthor" resultMap="BaseResultMap">
+    select * from novel
+    where book_name like #{param} or author like #{param}
+    order by click_count desc
+  </select>
+  <select id="getHotIdByCategory" resultType="java.lang.Long">
+    SELECT id from novel where category = #{category} ORDER BY click_count desc LIMIT 0, #{count};
+  </select>
+  <select id="listTopNovels" resultMap="BaseResultMap">
+    select * from novel order by click_count desc limit 0, #{count}
+  </select>
+
+</mapper>

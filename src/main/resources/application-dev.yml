@@ -2,13 +2,14 @@
 spring:
   # 数据源配置
   datasource:
-    url: jdbc:mysql://localhost:3306/test
-    username: root
-    password: 123456
+    url: jdbc:mysql://111.229.58.19:3306/neko
+    username: farewell
+    password: Farewell*187
     type: com.alibaba.druid.pool.DruidDataSource
-  # 开发环境关闭thymeleaf的缓存
-#  thymeleaf:
-#    cache: false
+  redis:
+    host: 111.229.58.19
+    port: 6379
+    password: Farewell*187
 # 日志配置
 logging:
   file: logs/neko-dev.log
@@ -17,3 +18,15 @@ logging:
     com.wzz: debug
 server:
   port: 8090
+
+# 自定义属性
+my-config-info:
+  recommendList[0]: "诡秘之主;爱潜水的乌贼"
+  recommendList[1]: "全球高武;老鹰吃小鸡"
+  recommendList[2]: "我有一座恐怖屋;我会修空调"
+  recommendList[3]: "道门法则;八宝饭"
+  recommendList[4]: "飞剑问道;我吃西红柿"
+  recommendList[5]: "黄庭道主;妖僧花无缺"
+  recommendList[6]: "重生之财源滚滚;老鹰吃小鸡"
+  recommendList[7]: "完美世界;辰东"
+

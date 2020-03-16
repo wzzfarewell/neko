@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzz.neko.dao.ComicChapterContentMapper">
+  <resultMap id="BaseResultMap" type="com.wzz.neko.model.ComicChapterContent">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="chapter_id" jdbcType="BIGINT" property="chapterId" />
+    <result column="content_num" jdbcType="INTEGER" property="contentNum" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+  </resultMap>
+    <select id="listByChapterId" resultMap="BaseResultMap">
+      select * from comic_chapter_content where chapter_id = #{chapterId}
+    </select>
+</mapper>

@@ -1,4 +1,4 @@
-package com.wzz.neko.configurer;
+package com.wzz.neko.config;
 
 import com.github.pagehelper.PageHelper;
 import com.wzz.neko.core.ProjectConstant;

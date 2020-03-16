@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzz.neko.dao.CategoryMapper">
+  <resultMap id="BaseResultMap" type="com.wzz.neko.model.Category">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="book_count" jdbcType="BIGINT" property="bookCount" />
+  </resultMap>
+    <select id="findAllByCountDesc" resultMap="BaseResultMap">
+      SELECT * from novel_category order BY book_count desc
+    </select>
+  <select id="findTopCategories" resultMap="BaseResultMap">
+    SELECT * from novel_category order BY book_count desc limit 0, #{len}
+  </select>
+</mapper>

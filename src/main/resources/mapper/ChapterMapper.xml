@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzz.neko.dao.ChapterMapper">
+  <resultMap id="BaseResultMap" type="com.wzz.neko.model.Chapter">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="book_id" jdbcType="BIGINT" property="bookId" />
+    <result column="chapter_num" jdbcType="INTEGER" property="chapterNum" />
+    <result column="chapter_name" jdbcType="VARCHAR" property="chapterName" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+
+    <select id="listChaptersByNovelId" resultMap="BaseResultMap">
+      select id, chapter_num, chapter_name from chapter where book_id = #{novelId}
+    </select>
+</mapper>

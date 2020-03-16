@@ -3,42 +3,75 @@ package com.wzz.neko.model;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
+/**
+ * User
+ *
+ * @author wzzfarewell
+ * @date 2020/1/9
+ */
 @ToString
+@Table(name = "t_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
+    @NotBlank(message = "密码不能为空")
     private String password;
 
-    @Column(name = "nick_name")
-    private String nickName;
+    private String phone;
 
-    private Integer sex;
+    private String email;
 
-    @Column(name = "register_date")
+    private String gender;
+
+    @JSONField(format = "yyyy-MM-dd")
+    private Date birthday;
+
+    @Column(name = "register_time")
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    private Date registerDate;
+    private Date registerTime;
+
+    private Integer role;
+
+    private String activeCode;
+
+    private Integer status;
+
+    public String getActiveCode() {
+        return activeCode;
+    }
+
+    public void setActiveCode(String activeCode) {
+        this.activeCode = activeCode;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     /**
      * @return id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -71,44 +104,86 @@ public class User {
     }
 
     /**
-     * @return nick_name
+     * @return phone
      */
-    public String getNickName() {
-        return nickName;
+    public String getPhone() {
+        return phone;
     }
 
     /**
-     * @param nickName
+     * @param phone
      */
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     /**
-     * @return sex
+     * @return email
      */
-    public Integer getSex() {
-        return sex;
+    public String getEmail() {
+        return email;
     }
 
     /**
-     * @param sex
+     * @param email
      */
-    public void setSex(Integer sex) {
-        this.sex = sex;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     /**
-     * @return register_date
+     * @return gender
      */
-    public Date getRegisterDate() {
-        return registerDate;
+    public String getGender() {
+        return gender;
     }
 
     /**
-     * @param registerDate
+     * @param gender
      */
-    public void setRegisterDate(Date registerDate) {
-        this.registerDate = registerDate;
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    /**
+     * @return birthday
+     */
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    /**
+     * @param birthday
+     */
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    /**
+     * @return register_time
+     */
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    /**
+     * @param registerTime
+     */
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    /**
+     * @return role
+     */
+    public Integer getRole() {
+        return role;
+    }
+
+    /**
+     * @param role
+     */
+    public void setRole(Integer role) {
+        this.role = role;
     }
 }

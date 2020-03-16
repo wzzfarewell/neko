@@ -5,11 +5,33 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
-    <result column="sex" jdbcType="INTEGER" property="sex" />
-    <result column="register_date" jdbcType="TIMESTAMP" property="registerDate" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="register_time" jdbcType="TIMESTAMP" property="registerTime" />
+    <result column="role" jdbcType="INTEGER" property="role" />
+    <result column="active_code" jdbcType="VARCHAR" property="activeCode" />
+    <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+  <update id="updateUserStatusByCode">
+    update t_user set status = #{status} where active_code = #{code}
+  </update>
+  <select id="findByUsername" resultType="java.lang.Integer">
+    select count(1) from t_user
+    where username = #{username}
+  </select>
+  <select id="selectByUsernameAndPwd" resultMap="BaseResultMap">
+    select * from t_user
+    where username = #{name} and password = #{pwd}
+  </select>
+
+  <select id="selectByActiveCode" resultMap="BaseResultMap">
+    select * from t_user
+    where active_code = #{code}
+  </select>
+
 </mapper>

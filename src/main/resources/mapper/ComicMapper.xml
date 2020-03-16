@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzz.neko.dao.ComicMapper">
+  <resultMap id="BaseResultMap" type="com.wzz.neko.model.Comic">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="comic_name" jdbcType="VARCHAR" property="comicName" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="cover" jdbcType="VARCHAR" property="cover" />
+    <result column="chapter_url" jdbcType="VARCHAR" property="chapterUrl" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="latest_update_time" jdbcType="TIMESTAMP" property="latestUpdateTime" />
+    <result column="latest_chapter_num" jdbcType="INTEGER" property="latestChapterNum" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="click_count" jdbcType="BIGINT" property="clickCount" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+  </resultMap>
+
+  <select id="listByNameOrAuthor" resultMap="BaseResultMap">
+    select * from comic where comic_name like #{param} or author like #{param}
+    order by click_count desc
+  </select>
+</mapper>

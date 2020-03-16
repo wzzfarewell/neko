@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzz.neko.dao.ComicFavoriteMapper">
+  <resultMap id="BaseResultMap" type="com.wzz.neko.model.ComicFavorite">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="comic_id" jdbcType="BIGINT" property="comicId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByUserComicId">
+    update comic_favorite set status = 0, update_time = now()
+    where user_id = #{userIdByToken} and comic_id = #{comicId}
+  </delete>
+  <select id="listByUser" resultMap="BaseResultMap">
+    select * from comic_favorite
+    where user_id = #{userId} and status = 1
+    order by create_time desc
+  </select>
+</mapper>

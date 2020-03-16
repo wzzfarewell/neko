@@ -21,5 +21,6 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-
+git
 logs/
+.log
