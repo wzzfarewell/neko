@@ -23,4 +23,4 @@ nbdist/
 .nb-gradle/
 git
 logs/
-.log
+*.log
