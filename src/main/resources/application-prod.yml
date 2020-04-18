@@ -10,6 +10,19 @@ spring:
     host: 111.229.58.19
     port: 6379
     password: Farewell*187
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: nekofarewell@foxmail.com
+    password: ydredzdosjjobijc
+    default-encoding: UTF-8
+    properties:
+      from: nekofarewell@foxmail.com
+      mail:
+        smtp:
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+        debug: false
 # 日志配置
 logging:
   file: logs/neko-prod.log

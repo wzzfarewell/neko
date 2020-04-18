@@ -187,4 +187,9 @@ public class NovelServiceImpl extends AbstractService<Novel> implements NovelSer
         param = "%" + param + "%";
         return novelMapper.listByBookNameOrAuthor(param);
     }
+
+    @Override
+    public List<Novel> getAll() {
+        return novelMapper.listAll();
+    }
 }

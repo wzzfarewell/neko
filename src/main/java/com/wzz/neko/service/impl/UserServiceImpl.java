@@ -59,10 +59,16 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         user.setRole(Const.Role.ROLE_CUSTOMER);
         user.setActiveCode(UUID.randomUUID().toString());
         user.setStatus(Const.UserStatus.NOT_ACTIVE);
+        // 验证此邮箱是否已有注册用户使用
+        if(null != userMapper.findByEmail(user.getEmail())){
+            return ResultGenerator.genFailResult("此邮箱已被人注册，请更换邮箱重新注册");
+        }
+        // 发送激活邮件到用户注册的邮箱
         String emailMsg = "感谢您注册怪喵，点击<a href='" + Const.ACTIVE_USER_URL + user.getActiveCode() + "'>&nbsp;激活&nbsp;</a>后使用。" + "<br />为保障您的账户安全，请在24小时内完成激活操作";
         MailVo mailVo = new MailVo();
         mailVo.setToEmail(user.getEmail());
         mailVo.setContent(emailMsg);
+        mailVo.setSubject(Const.MAIL_SUBJECT_ACTIVE);
         boolean sendMailSuccess = false;
         try {
             sendMailSuccess = SendMailManage.sendMail(mailVo);
@@ -148,6 +154,42 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         if(u != null){
             u.setPassword(MD5Utils.MD5EncodeUtf8(newPwd));
             return userMapper.updateByPrimaryKey(u);
+        }
+        return 0;
+    }
+
+    @Override
+    public Result updatePwdByEmail(String email) {
+        User user = userMapper.findByEmail(email);
+        if(user == null){
+            return ResultGenerator.genFailResult("此邮箱未被注册，请重新输入您注册时使用的邮箱");
+        }else{
+            String emailMsg = "您正在修改怪喵密码，点击<a href='" + Const.RESET_PWD_URL + user.getActiveCode() + "'>&nbsp;重置密码&nbsp;</a>进入密码重置页面。" + "<br />非本人操作请忽略！";
+            MailVo mailVo = new MailVo();
+            mailVo.setToEmail(user.getEmail());
+            mailVo.setContent(emailMsg);
+            mailVo.setSubject(Const.MAIL_SUBJECT_RESET_PWD);
+            boolean sendMailSuccess = false;
+            try {
+                sendMailSuccess = SendMailManage.sendMail(mailVo);
+            } catch (SendMailException e) {
+                return ResultGenerator.genFailResult("发送重置密码邮件失败，失败原因：" + e.getMessage());
+            } catch (MailNotExistException e){
+                return ResultGenerator.genFailResult("发送重置密码邮件失败，请使用有效的邮箱地址，失败原因：" + e.getMessage());
+            }
+            if(sendMailSuccess){
+                return ResultGenerator.genSuccessResult(null, "用户：" + user.getUsername() + "重置密码邮件已经发送到您的邮箱！");
+            }
+            return ResultGenerator.genFailResult("服务器发送邮件繁忙，请稍后注册");
+        }
+    }
+
+    @Override
+    public int updateUserPwdByCode(String activeCode, String newPwd) {
+        User user = userMapper.selectByActiveCode(activeCode);
+        if(null != user){
+            user.setPassword(MD5Utils.MD5EncodeUtf8(newPwd));
+            return userMapper.updateByPrimaryKey(user);
         }
         return 0;
     }

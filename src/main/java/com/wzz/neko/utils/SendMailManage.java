@@ -3,7 +3,10 @@ package com.wzz.neko.utils;
 import com.wzz.neko.dto.MailVo;
 import com.wzz.neko.exceptions.MailNotExistException;
 import com.wzz.neko.exceptions.SendMailException;
+import com.wzz.neko.service.MailService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.*;
 
@@ -14,7 +17,14 @@ import java.util.concurrent.*;
  * @date 2020/2/24
  **/
 @Slf4j
+@Component
 public class SendMailManage{
+    private static MailService mailService;
+
+    @Autowired
+    public void setMailService(MailService mailService){
+        SendMailManage.mailService = mailService;
+    }
     /**
      *    缓存发送邮件的队列
      */
@@ -67,9 +77,9 @@ public class SendMailManage{
                     }
                     timestamp = System.currentTimeMillis();
                     MailVo mail = queue.poll();
-                    MailUtils.getInstance().sendMail(mail);
+                    mailService.sendRegisterMail(mail);
 
-                    //发送一个邮件休息2秒，防止发送过快，导致主油箱被锁定
+                    //发送一个邮件休息2秒，防止发送过快，导致主邮箱被锁定
                     Thread.sleep(2000);
                 } catch (Exception e) {
                     log.error("邮件推送线程出错",e);

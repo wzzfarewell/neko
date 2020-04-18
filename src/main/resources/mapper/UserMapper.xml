@@ -33,5 +33,9 @@
     select * from t_user
     where active_code = #{code}
   </select>
+    <select id="findByEmail" resultMap="BaseResultMap">
+      select * from t_user
+      where email = #{email}
+    </select>
 
 </mapper>

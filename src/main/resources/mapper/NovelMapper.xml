@@ -33,7 +33,8 @@
     select latest_update_time from novel_detail where book_id = #{novelId}
   </select>
     <select id="getLatestIdByCategory" resultType="java.lang.Long">
-      SELECT id from novel where category = #{category} ORDER BY latest_update_time desc LIMIT 0, #{count};
+      select id from novel
+      where category = #{category} ORDER BY latest_update_time desc LIMIT 0, #{count};
     </select>
   <select id="getNovelByNameAndAuthor" resultMap="BaseResultMap">
       SELECT * from novel where book_name = #{name}
@@ -62,10 +63,19 @@
     order by click_count desc
   </select>
   <select id="getHotIdByCategory" resultType="java.lang.Long">
-    SELECT id from novel where category = #{category} ORDER BY click_count desc LIMIT 0, #{count};
+    select id from novel
+    where category = #{category} ORDER BY click_count desc LIMIT 0, #{count};
   </select>
   <select id="listTopNovels" resultMap="BaseResultMap">
-    select * from novel order by click_count desc limit 0, #{count}
+    select * from novel
+    order by click_count desc limit 0, #{count}
+  </select>
+  <select id="listAll" resultMap="BaseResultMap">
+    select n.id, n.book_name, n.author, n.category, n.cover, n.click_count,
+     n.description, nd.`status`, n.add_time, nd.latest_update_time,
+     c.chapter_name as latest_chapter_name
+    from novel n join novel_detail nd on n.id = nd.book_id
+      join chapter c on (c.book_id = n.id and c.chapter_num = nd.latest_chapter_num)
   </select>
 
 </mapper>

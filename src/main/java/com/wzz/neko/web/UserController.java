@@ -92,4 +92,21 @@ public class UserController {
         }
     }
 
+    @NoToken
+    @PostMapping("/checkUserEmail")
+    public Result checkUserEmail(String email){
+        return userService.updatePwdByEmail(email);
+    }
+
+    @NoToken
+    @PostMapping("/resetUserPwd")
+    public Result resetUserPwd(String activeCode, String newPwd){
+        int res = userService.updateUserPwdByCode(activeCode, newPwd);
+        if(res > 0){
+            return ResultGenerator.genSuccessResult(null, "重置用户密码成功");
+        }else{
+            return ResultGenerator.genFailResult("重置用户密码失败");
+        }
+    }
+
 }

@@ -26,6 +26,7 @@ public class Const {
     }
 
     public static final String ACTIVE_USER_URL = PropertiesUtils.getProperty("activeUserUrl");
+    public static final String RESET_PWD_URL = PropertiesUtils.getProperty("resetPasswordUrl");
     public static final String REDIS_NOVEL_DETAIL_PREFIX = "Novel_Detail_";
     public static final String REDIS_NOVEL_INDEX_PREFIX = "Novel_INDEX_";
     public static final String REDIS_COMIC_DETAIL_PREFIX = "Comic_Detail_";
@@ -36,4 +37,7 @@ public class Const {
 
     public static final String ENV_DEV = "dev";
     public static final String ENV_PRO = "prod";
+
+    public static final String MAIL_SUBJECT_ACTIVE = "注册用户激活";
+    public static final String MAIL_SUBJECT_RESET_PWD = "重置用户密码";
 }

@@ -37,4 +37,6 @@ public interface NovelService extends Service<Novel> {
 
     List<Novel> search(String param);
 
+    List<Novel> getAll();
+
 }

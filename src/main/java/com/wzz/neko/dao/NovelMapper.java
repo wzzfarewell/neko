@@ -28,4 +28,6 @@ public interface NovelMapper extends Mapper<Novel> {
     int updateClickCountById(@Param("id") Long id, @Param("count") Long count);
 
     List<Novel> listTopNovels(Long count);
+
+    List<Novel> listAll();
 }

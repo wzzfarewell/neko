@@ -14,4 +14,6 @@ public interface UserMapper extends Mapper<User> {
 
     int updateUserStatusByCode(@Param("code") String code, @Param("status") Integer status);
 
+    User findByEmail(String email);
+
 }

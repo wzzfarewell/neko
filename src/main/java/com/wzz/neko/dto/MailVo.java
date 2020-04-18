@@ -10,7 +10,7 @@ import lombok.Data;
  **/
 @Data
 public class MailVo {
-
+    private String subject;
     private String toEmail;
     private String content;
 }

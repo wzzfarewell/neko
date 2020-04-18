@@ -33,4 +33,8 @@ public interface UserService extends Service<User> {
     Long getUserIdByToken(String token);
 
     int updateUserPwd(String token, String oldPwd, String newPwd);
+
+    Result updatePwdByEmail(String email);
+
+    int updateUserPwdByCode(String activeCode, String newPwd);
 }
